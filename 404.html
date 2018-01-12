@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>404</title>
+  <style>
+    html, body {
+      height: 100%;
+    }
+    body {
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #wrap {
+      position: relative;
+      width: 598px;
+      height: 406px;
+      background: #666;
+      overflow: hidden;
+      cursor: none;
+      border: 1px solid #333;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-user-select: none;
+    }
+    #wrap div.wall {
+      position: absolute;
+      top: 175px;
+      left: 0;
+      width: 100%;
+    }
+    #text {
+      margin: 0;
+      color: #999;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 80px;
+      line-height: 0.5em;
+      height: 1px;
+      font-weight: bold;
+      text-align: center;
+    }
+    div.wall div {
+      position: absolute;
+      background: #999;
+      top: 42px;
+      left: 0;
+      height: 300px;
+      width: 100%;
+    }
+    #light {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url(./images/spotlight.png) top center;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div class="wall">
+      <p id="text">404</p>
+      <div></div>
+    </div>
+    <div id="light"></div>
+  </div>
+  <script>
+    var wrap = document.getElementById('wrap');
+    var text = document.getElementById('text');;
+    var spot = document.getElementById('light');;
+    var wrapLeft = wrap.offsetLeft;
+    var wrapTop = wrap.offsetTop;
+    init();
+    function init() {
+      wrap.onmousemove = onMouseMove;
+      wrap.ontouchmove = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        onMouseMove({
+          clientX: e.touches[0].clientX,
+          clientY: e.touches[0].clientY
+        });
+      };
+      onMouseMove({ clientX: 300, clientY: 200 });
+    }
+    function onMouseMove(e) {
+      var x = e.clientX - wrapLeft;
+      var y = e.clientY - wrapTop;
+      var xm = x - 300;
+      var ym = y - 175;
+      var d = Math.sqrt(xm * xm + ym * ym);
+      text.style.textShadow = -xm + 'px ' + -ym + 'px ' + (d / 5 + 10) + 'px black';
+
+      xm = x - 600;
+      ym = y - 450;
+      spot.style.backgroundPosition = xm + 'px ' + ym + 'px';
+    }
+  </script>
+</body>
+</html>
