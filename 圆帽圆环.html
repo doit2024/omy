@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>圆帽圆环</title>
+</head>
+
+<body>
+
+  <canvas id="myCanvas" width="200" height="200" style="border:1px solid #d3d3d3;"></canvas>
+
+  <script>
+    function Circle() {
+      this.radius = 90;
+      this.lineWidth = 20;
+      this.strokeStyle = '#eee';
+      this.fillStyle = '#f80';
+      this.lineCap = 'round';
+    }
+    Circle.prototype.draw = function (ctx) {
+      ctx.beginPath();
+      ctx.arc(100, 100, this.radius, 0, Math.PI * 2, true);
+      ctx.lineWidth = this.lineWidth;
+      ctx.strokeStyle = this.strokeStyle;
+      ctx.stroke();
+    };
+    function Ring(startAngle, percent) {
+      Circle.call(this);
+      this.startAngle = startAngle || 3 * Math.PI / 2;
+      this.percent = percent;
+    }
+    Ring.prototype = Object.create(Circle.prototype);
+    Ring.prototype.drawRing = function (ctx) {
+      this.draw(ctx);
+      ctx.beginPath();
+      var anglePerSec = 2 * Math.PI / (100 / this.percent);
+      ctx.arc(100, 100, this.radius, this.startAngle, this.startAngle + anglePerSec, false);
+      ctx.strokeStyle = this.fillStyle;
+      ctx.lineCap = this.lineCap;
+      ctx.stroke();
+      ctx.closePath();
+    }
+    var ctx = document.getElementById('myCanvas').getContext('2d');
+    let c = new Ring(2*Math.PI/3, 50)
+    c.drawRing(ctx)
+  </script>
+
+</body>
+
+</html>
