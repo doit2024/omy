@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>扇形</title> 
+</head>
+<body>
+
+<canvas id="myCanvas" width="200" height="200" style="border:1px solid #d3d3d3;"></canvas>
+
+<script>
+CanvasRenderingContext2D.prototype.sector = function(x,y,r,angle1,angle2){
+    this.save();
+    this.beginPath();
+    this.moveTo(x,y);
+    this.arc(x,y,r,angle1*Math.PI/180,angle2*Math.PI/180,false);
+    this.closePath();    
+    this.restore();
+    return this;
+}
+let ctx=document.getElementById("myCanvas").getContext("2d");
+let grd=ctx.createLinearGradient(200,0,0,200);
+grd.addColorStop(0,"#AED285");
+grd.addColorStop(1,"#3ECBA0");
+ctx.fillStyle = grd;
+let percent = 0.7;
+ctx.sector(100,100,100,-90,(360*percent-90)).fill();
+</script> 
+
+</body>
+</html>
