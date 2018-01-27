@@ -1,7 +1,8 @@
 /**
  * 服务器相关操作      fis3 server -h
  * 启动服务器          fis3 server start
- * 开发环境-热更新      fis3 release -wL
+ * 开发环境-热更新      fis3 release debug -wL
+ * debug -> test -> build
  */
 
 // fis3 release test
@@ -71,6 +72,10 @@ fis.match('*.ts', {
 
 fis.match('*.png', {
   optimizer: fis.plugin('png-compressor')
+});
+
+fis.media('debug').match('*', {
+  useHash: false
 });
 
 fis.match('*conf.js', {
