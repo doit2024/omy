@@ -1,4 +1,11 @@
 /**
+ * 依赖:
+ * fis-parser-node-sass
+ * fis3-preprocessor-autoprefixer
+ * fis3-parser-typescript
+ * fis-parser-babel-5.x
+ * fis3-postpackager-loader
+ *
  * 服务器相关操作      fis3 server -h
  * 启动服务器          fis3 server start
  * 开发环境-热更新      fis3 release debug -wL
@@ -37,7 +44,7 @@ fis.match('*.less', {
 });
 
 fis.match('*.scss', {
-  parser: fis.plugin('scss'),
+  parser: fis.plugin('node-sass'),
   rExt: '.css'
 });
 
