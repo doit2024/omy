@@ -59,6 +59,17 @@ function binarySort (a) {
   }
 }
 
+// 选择排序
+function selectSort(a) {
+  let i, j, min, len = a.length
+  for (i = 0; i < len - 1 ; i++) {
+    min = i
+    for (j = i + 1; j < len; j++) {
+      a[min] > a[j] && (min = j)
+    }
+    i !== min && ([a[i], a[min]] = [a[min], a[i]])
+  }
+}
 
 let xs = Array.from({length: 10}, i => ~~(Math.random() * 100))
 let rst = xs.slice().sort((a, b) => a - b)
