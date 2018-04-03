@@ -57,7 +57,7 @@ function binarySort (a) {
 }
 
 // 选择排序
-function selectSort(a) {
+function selectSort (a) {
   let i, j, min, len = a.length
   for (i = 0; i < len - 1 ; i++) {
     min = i
