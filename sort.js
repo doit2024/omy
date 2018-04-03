@@ -1,3 +1,5 @@
+const assert = require('assert')
+
 // 冒泡
 function bubble (a) {
   let i, j, l = a.length - 1
@@ -73,5 +75,11 @@ function selectSort(a) {
 
 let xs = Array.from({length: 10}, i => ~~(Math.random() * 100))
 let rst = xs.slice().sort((a, b) => a - b)
+
 binarySort(xs)
-console.log(rst.toString() === xs.toString())
+
+try {
+  assert.deepStrictEqual(xs, rst, 'not equal')
+} catch (e) {
+  console.log('>>> wrong:', e.message)
+}
