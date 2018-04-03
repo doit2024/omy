@@ -41,7 +41,7 @@ function insert (a) {
 // 二分插入
 function bs (a, left, right, temp) {
   if (left > right) return right
-  const mid = ~~((left + right) / 2)
+  const mid = (left + right) >> 1
   if (temp > a[mid]) {
     return bs(a, mid + 1, right, temp)
   } else {
