@@ -1,5 +1,3 @@
-const assert = require('assert')
-
 // 冒泡
 function bubble (a) {
   let i, j, l = a.length - 1
@@ -11,7 +9,7 @@ function bubble (a) {
 }
 
 // 快速排序
-function q (a, start, end) {
+function quick (a, start, end) {
   if (start >= end) return
   let temp = a[start], i = start, j = end
   while (i < j) {
@@ -21,10 +19,10 @@ function q (a, start, end) {
   }
   a[start] = a[i]
   a[i] = temp
-  q(a, start, i-1)
-  q(a, i+1, end)
+  quick(a, start, i-1)
+  quick(a, i+1, end)
 }
-const quick = a => q(a, 0, a.length - 1)
+const quickSort = a => quick(a, 0, a.length - 1)
 
 // 简单插入
 function insert (a) {
@@ -39,21 +37,18 @@ function insert (a) {
 }
 
 // 二分插入
-function bs (a, left, right, temp) {
+function binary (a, left, right, temp) {
   if (left > right) return right
   const mid = (left + right) >> 1
-  if (temp > a[mid]) {
-    return bs(a, mid + 1, right, temp)
-  } else {
-    return bs(a, left, mid - 1, temp)
-  }
+  return temp > a[mid] ? binary(a, mid + 1, right, temp)
+                       : binary(a, left, mid - 1, temp)
 }
 
 function binarySort (a) {
   let i, j, k, temp, l = a.length
   for (i = 1; i < a.length; i++) {
     temp = a[i]
-    k = bs(a, 0, i - 1, temp)   
+    k = binary(a, 0, i - 1, temp)   
     for(j = i; j > k; j--) { 
       a[j] = a[j - 1]
     }
@@ -73,13 +68,33 @@ function selectSort(a) {
   }
 }
 
+// 归并
+function　merge (left, right) {
+  let result = []
+  while(left.length > 0 && right.length > 0) {
+    left[0] < right[0] ? result.push(left.shift())
+                       : result.push(right.shift())
+  }
+  return [...result, ...left, ...right]
+}
+
+function mergeSort (a) {
+  if (a.length === 1) return a
+  let mid = a.length >> 1,
+      left = a.slice(0, mid),
+      right = a.slice(mid)
+  return merge(mergeSort(left), mergeSort(right))
+}
+
+/////////////////////////////// test ///////////////////////////////
+
 let xs = Array.from({length: 10}, i => ~~(Math.random() * 100))
 let rst = xs.slice().sort((a, b) => a - b)
 
-binarySort(xs)
+mergeSort(xs)
 
 try {
-  assert.deepStrictEqual(xs, rst, 'not equal')
+  require('assert').deepStrictEqual(xs, rst, 'not equal')
 } catch (e) {
   console.log('>>> wrong:', e.message)
 }
