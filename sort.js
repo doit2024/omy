@@ -77,13 +77,11 @@ function　merge (left, right) {
   }
   return [...result, ...left, ...right]
 }
-
-function mergeSort (a) {
+// 不改变原数组， 排序结果为返回值
+const mergeSort = a => {
   if (a.length === 1) return a
-  let mid = a.length >> 1,
-      left = a.slice(0, mid),
-      right = a.slice(mid)
-  return merge(mergeSort(left), mergeSort(right))
+  let mid = a.length >> 1
+  return merge(mergeSort(a.slice(0, mid)), mergeSort(a.slice(mid)))
 }
 
 /////////////////////////////// test ///////////////////////////////
@@ -91,7 +89,7 @@ function mergeSort (a) {
 let xs = Array.from({length: 10}, i => ~~(Math.random() * 100))
 let rst = xs.slice().sort((a, b) => a - b)
 
-mergeSort(xs)
+xs = mergeSort(xs)
 
 try {
   require('assert').deepStrictEqual(xs, rst, 'not equal')
