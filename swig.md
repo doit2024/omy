@@ -4,8 +4,6 @@ npm install swig --save
 ```
 
 ## 和express框架集成
-app.js
-
 ```
 var express = require('express');
 var swig = require('swig');
@@ -58,156 +56,155 @@ index.html
 ```
 
 ## 基本用法
-> 变量
-```
-{{ name }}
-```
+> **变量**
+  - 前后两端都要有空格
+  ```
+  {{ name }}
+  ```
 
-这里需要注意的是前后两端都要有空格，这样{{name}}写就会报错
+> **属性**
+  ```
+  {{ student.name }}
+  ```
 
-> 属性
-```
-{{ student.name }}
-```
+> **模板继承**
+  - 定义一个模板
+  ```
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}{% endblock  %}</title>
+      {% block head %}{% endblock  %}
+  </head>
+  <body>
+      {% block content %}{% endblock  %}
+  </body>
+  </html>
+  ```
 
-> 模板继承
-- 定义一个模板
-```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock  %}</title>
-    {% block head %}{% endblock  %}
-</head>
-<body>
-    {% block content %}{% endblock  %}
-</body>
-</html>
-```
+  - 继承这个模板
+  ```
+  {% extends './layout.html' %}
+  {% block title %} index {% endblock %}
+  {% block content %}
+      <div>
+              <h1>hello swig</h1>
+       <div>
+  {% endblock %}
+  ```
 
-- 继承这个模板
-```
-{% extends './layout.html' %}
-{% block title %} index {% endblock %}
-{% block content %}
-    <div>
-            <h1>hello swig</h1>
-     <div>
-{% endblock %}
-```
+  - 包含模板
+  ```
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{% block title %}{% endblock  %}</title>
+      {% include "./includes/head.html" %}
+      {% block head %}{% endblock  %}
+  </head>
+  <body>
+      {% include "./includes/header.html" %}
+      {% block content %}{% endblock  %}
+  </body>
+  </html>
+  ```
 
-- 包含模板
-```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}{% endblock  %}</title>
-    {% include "./includes/head.html" %}
-    {% block head %}{% endblock  %}
-</head>
-<body>
-    {% include "./includes/header.html" %}
-    {% block content %}{% endblock  %}
-</body>
-</html>
-```
+> **if**
 
-> if
+  ```
+  { % if name === '郭靖' % }
+    hello 靖哥哥
+  { % endif % }
+  ```
 
-```
-{ % if name === '郭靖' % }
-  hello 靖哥哥
-{ % endif % }
-```
+> **if-else**
 
-> if-else
+  ```
+  { % if name === '郭靖' % }
+    hello 靖哥哥
+  { % elseif name === '黄蓉' % }
+    hello 蓉妹妹
+  { % else % }
+    hello 欧阳峰
+  { % endif % }
+  ```
 
-```
-{ % if name === '郭靖' % }
-  hello 靖哥哥
-{ % elseif name === '黄蓉' % }
-  hello 蓉妹妹
-{ % else % }
-  hello 欧阳峰
-{ % endif % }
-```
+> **for**
 
-> for
+  ```
+  // arr = [1, 2, 3]
+  { % for key, val in arr % }
+    <p>{ { key } } -- { { val } }</p>
+  { % endfor % }
+  ```
 
-```
-// arr = [1, 2, 3]
-{ % for key, val in arr % }
-  <p>{ { key } } -- { { val } }</p>
-{ % endfor % }
-```
+  - for循环内置变量：
+  ```
+  loop.index：当前循环的索引（1开始）
+  loop.index0：当前循环的索引（0开始）
+  loop.revindex：当前循环从结尾开始的索引（1开始）
+  loop.revindex0：当前循环从结尾开始的索引（0开始）
+  loop.key：如果迭代是对象，是当前循环的键，否则同 loop.index
+  loop.first：如果是第一个值返回 true
+  loop.last：如果是最后一个值返回 true
+  loop.cycle：一个帮助函数，以指定的参数作为周期
+  ```
 
-- for循环内置变量：
-```
-loop.index：当前循环的索引（1开始）
-loop.index0：当前循环的索引（0开始）
-loop.revindex：当前循环从结尾开始的索引（1开始）
-loop.revindex0：当前循环从结尾开始的索引（0开始）
-loop.key：如果迭代是对象，是当前循环的键，否则同 loop.index
-loop.first：如果是第一个值返回 true
-loop.last：如果是最后一个值返回 true
-loop.cycle：一个帮助函数，以指定的参数作为周期
-```
+  - 使用方法：
+  ```
+  // arr = [1, 2, 3]
+  { % for key, val in arr % }
+    <p>{{ loop.index }} -- {{ key }} -- {{ val }}</p>
+  { % endfor % }
+  ```
 
-- 使用方法：
-```
-// arr = [1, 2, 3]
-{ % for key, val in arr % }
-  <p>{{ loop.index }} -- {{ key }} -- {{ val }}</p>
-{ % endfor % }
-```
-
-> 内置过滤器
-```
-add(value)：使变量与value相加，可以转换为数值字符串会自动转换为数值。
-addslashes：用 \ 转义字符串
-capitalize：大写首字母
-date(format[, tzOffset])：转换日期为指定格式
-format：格式
-tzOffset：时区
-default(value)：默认值（如果变量为undefined，null，false）
-escape([type])：转义字符
-默认： &, <, >, ", '
-js: &, <, >, ", ', =, -, ;
-first：返回数组第一个值
-join(glue)：同[].join
-json_encode([indent])：类似JSON.stringify, indent为缩进空格数
-last：返回数组最后一个值
-length：返回变量的length，如果是object，返回key的数量
-lower：同''.toLowerCase()
-raw：指定输入不会被转义
-replace(search, replace[, flags])：同''.replace
-reverse：翻转数组
-striptags：去除html/xml标签
-title：大写首字母
-uniq：数组去重
-upper：同''.toUpperCase
-url_encode：同encodeURIComponent
-url_decode：同decodeURIComponemt
-```
+> **内置过滤器**
+  ```
+  add(value)：使变量与value相加，可以转换为数值字符串会自动转换为数值。
+  addslashes：用 \ 转义字符串
+  capitalize：大写首字母
+  date(format[, tzOffset])：转换日期为指定格式
+  format：格式
+  tzOffset：时区
+  default(value)：默认值（如果变量为undefined，null，false）
+  escape([type])：转义字符
+  默认： &, <, >, ", '
+  js: &, <, >, ", ', =, -, ;
+  first：返回数组第一个值
+  join(glue)：同[].join
+  json_encode([indent])：类似JSON.stringify, indent为缩进空格数
+  last：返回数组最后一个值
+  length：返回变量的length，如果是object，返回key的数量
+  lower：同''.toLowerCase()
+  raw：指定输入不会被转义
+  replace(search, replace[, flags])：同''.replace
+  reverse：翻转数组
+  striptags：去除html/xml标签
+  title：大写首字母
+  uniq：数组去重
+  upper：同''.toUpperCase
+  url_encode：同encodeURIComponent
+  url_decode：同decodeURIComponemt
+  ```
 
 
-- 使用：
-```
-{{ birthday|date('Y-m-d') }}
-```
+  - 使用：
+  ```
+  {{ birthday|date('Y-m-d') }}
+  ```
 
-- 大写首字母
-```
-{{ name|title }}
-```
+  - 大写首字母
+  ```
+  {{ name|title }}
+  ```
 
-> set命令
-- 用来设置一个变量，在当前上下文中复用
-```
-{% set foo = [0, 1, 2, 3, 4, 5] %}
- {% for num in foo %}
-    <li>{{ num }}</li>
-{% endfor %}
-```
+> **set命令**
+  - 用来设置一个变量，在当前上下文中复用
+  ```
+  {% set foo = [0, 1, 2, 3, 4, 5] %}
+   {% for num in foo %}
+      <li>{{ num }}</li>
+  {% endfor %}
+  ```
