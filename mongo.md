@@ -1,14 +1,19 @@
 # MongoDB 
 * ( 示例：myDB->student )
+
 ### 1.安装
 > [官网][0]
+
 ### 2.环境变量  
 > C:\Program Files\MongoDB\Server\3.4\bin
+
 ### 3.创建数据库存储文件夹
 > C:\mongo
+
 ### 4.MongoDB开机(保持状态)
 > * $ mongod --dbpath c:\mongo  [mongoVUE中collections无法展开,故使用下行命令][1] 
 > * $ mongod --storageEngine mmapv1 --dbpath c:\mongo 
+
 ### 5.连接数据库
 > $ mongo
 > #### 1.查看
@@ -39,6 +44,7 @@
 > * 总数查询: $ db.student.find().count();
 > #### 7.排序
 > $ db.student.find().sort({"score.yuwen":-1,age":1});
+
 ### 6.导入数据库：注意在目录环境下
 > $ mongoimport --db myDB --collection student --drop --file f:\from.json
 
