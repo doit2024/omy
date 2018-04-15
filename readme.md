@@ -2,7 +2,6 @@
 
 ## npm
 
-
 > mock
 
 - mock.js
