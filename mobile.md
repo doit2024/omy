@@ -105,7 +105,6 @@
 > <td onclick="location.href='tel:122'">
 > ```
 
-
 ### 自动大写与自动修正
 > **要关闭这两项功能，可以通过autocapitalize 与autocorrect 这两个选项**
 > ```
