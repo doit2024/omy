@@ -16,7 +16,7 @@
 
 ## linux
 
->nginx
+> nginx
 
 - brew search nginx
 - brew install nginx
@@ -24,6 +24,15 @@
 - nginx
 - nginx -s reload
 - nginx -s stop
+
+> pm2
+- npm install pm2
+- pm2 start app.js
+- pm2 list
+- pm2 show app
+- pm2 logs
+- pm2 stop app
+- pm2 delete app
 
 ## git
 
