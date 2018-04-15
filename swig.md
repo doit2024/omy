@@ -1,9 +1,11 @@
 ## swig的安装
+
 ```
 npm install swig --save
 ```
 
 ## 和express框架集成
+
 ```
 var express = require('express');
 var swig = require('swig');
@@ -56,6 +58,7 @@ index.html
 ```
 
 ## 基本用法
+
 > **变量**
   ```
   {{ name }}
