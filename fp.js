@@ -2,6 +2,15 @@ const curry = (f, arr = []) => (...args) => (a => a.length === f.length ? f(...a
 
 const compose = (...fs) => x => fs.reduceRight((p, c) => c(p), x)
 
+const memoize = f => {
+  let cache = {}
+  return (...args) => {
+    let key = JSON.stringify(args)
+    cache[key] = cache[key] || f.apply(f, ...args)
+    return cache[key]
+  }
+}
+
 /////////////////////////////////// 斐波那契 //////////////////////////////////////////
 
 /***
