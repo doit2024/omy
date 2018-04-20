@@ -73,10 +73,6 @@ $ cp -R project project.2010-06-01.bak      -- 项目拷贝快照
 ```
 $ git branch                                -- 列出本地分支
 
-$ git branch branchname                     -- 创建新分支
-
-$ git branch                                -- 列出本地分支
-
 $ git branch (branchname)                   -- 创建新分支
 
 $ git checkout (branchname)                 -- 切换到新分支
