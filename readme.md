@@ -112,3 +112,24 @@ $ cat test.txt                              -- 读取 test.txt
 $ git rm -r --cached .                      -- .gitinore无效时先执行本条命令清除cache,清除追踪，之后add-commit-push
 
 ```
+
+- 设置记住密码
+
+```
+// 默认15分钟
+git config --global credential.helper cache
+```
+
+- 如果想自己设置时间
+
+```
+// 一个小时之后失效
+git config credential.helper 'cache --timeout=3600'
+```
+
+- 长期存储密码
+
+```
+git config --global credential.helper store
+```
+
