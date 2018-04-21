@@ -133,3 +133,4 @@ git config credential.helper 'cache --timeout=3600'
 git config --global credential.helper store
 ```
 
+- [javascript-patterns](https://github.com/shichuan/javascript-patterns)
