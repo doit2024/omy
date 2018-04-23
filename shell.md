@@ -14,6 +14,10 @@ $ netstat -pntl
 
 # 查看pid并找出路径
 $ ps -ef
+
+# 打包/解包
+$ tar czvf {name}.tar {dirname}
+$ tar zxvf {name}.tar
 ```
 
 # sh
