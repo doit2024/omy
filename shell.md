@@ -15,9 +15,25 @@ $ netstat -pntl
 # 查看pid并找出路径
 $ ps -ef
 
-# 打包/解包
+# tar 打包/解包
 $ tar czvf {name}.tar {dirname}
 $ tar zxvf {name}.tar
+
+# gz 压缩/解压
+$ gzip {filename}
+$ gzip -d {name}.gz
+
+# tar + gz 压缩/解压
+$ tar zcvf {name}.tar.gz {dirname1} {dirname2} ...
+$ tar zxvf {name}.tar.gz
+
+# bz2 压缩/解压
+$ bzip2 -z {filename}
+$ bzip2 -d {name}.bz2
+
+# tar + bz2 压缩/解压
+$ tar jcvf {name}.tar.bz2 {dirname}
+$ tar jxvf {name}.tar.bz2
 ```
 
 # sh
