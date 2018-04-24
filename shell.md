@@ -34,6 +34,9 @@ $ bzip2 -d {name}.bz2
 # tar + bz2 压缩/解压
 $ tar jcvf {name}.tar.bz2 {dirname}
 $ tar jxvf {name}.tar.bz2
+
+# 查看磁盘空间
+$ df -h
 ```
 
 # sh
