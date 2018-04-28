@@ -35,3 +35,30 @@ class Maybe extends Container {
   } 
 }
 ```
+
+> Either
+
+```
+class Left {
+  constructor (x) {
+    this.__value = x
+  }
+  static of (x) {
+    return new Left(x)
+  }
+  map (f) {
+    return this
+  }
+}
+class Right {
+  constructor (x) {
+    this.__value = x
+  }
+  static of (x) {
+    return new Right(x)
+  }
+  map (f) {
+    return Right.of(f(this.__value))
+  }
+}
+```
