@@ -25,7 +25,7 @@ const match = curry(mh)
 // map :: Funtor f => (a -> b) -> f a -> f b
 const map = curry(mp)
 
-/* --------------------------------------------------------------------------------- */
+/* --------------------------------------Functor-------------------------------------- */
 class Container {
   constructor (x) {
     this.__value = x
@@ -38,7 +38,6 @@ class Container {
   }
 }
 
-/* --------------------------------------------------------------------------------- */
 const a = Container.of('hello')
 const b = Container.of({name: 'woody'})
 const ra = a.map(up)
@@ -46,19 +45,22 @@ const rb = b.map(prop('name')).map(concat(' teng'))
 console.log(ra)
 console.log(rb)
 
-/* --------------------------------------------------------------------------------- */
+/* ----------------------------------Functor End---------------------------------------- */
+/* --------------------------------------Maybe-------------------------------------- */
 class Maybe extends Container {
   static of (x) {
     return new Maybe(x)
   }
-  map (f) {
+  isNothing () {
     return [null, undefined].includes(this.__value)
+  } 
+  map (f) {
+    return this.isNothing()
       ? Maybe.of(null)
       : Maybe.of(f(this.__value))
   } 
 }
 
-/* --------------------------------------------------------------------------------- */
 const c = Maybe.of('hello woody')
 const d = Maybe.of()
 const rc = c.map(match(/e/ig))
@@ -73,8 +75,54 @@ const re = getName({list: []})
 const rf = getName({list: [{name: 'tom', age: 25}]})
 console.log(re)
 console.log(rf)
-/* --------------------------------------------------------------------------------- */
 
+// 释放容器中的值
+const maybe = curry((x, f, m) => m.isNothing() ? x : f(m.__value))
+
+const getName2 = compose(maybe('空数组', prop('name')), safeHead, prop('list'))
+const re2 = getName2({list: []})
+console.log(re2)
+
+/* ---------------------------------Maybe End---------------------------------------- */
+/* --------------------------------------Either-------------------------------------- */
+class Left {
+  constructor (x) {
+    this.__value = x
+  }
+  static of (x) {
+    return new Left(x)
+  }
+  map (f) {
+    return this
+  }
+}
+class Right {
+  constructor (x) {
+    this.__value = x
+  }
+  static of (x) {
+    return new Right(x)
+  }
+  map (f) {
+    return Right.of(f(this.__value))
+  }
+}
+
+const preb = x => 'b' + x
+const g = Left.of('rain').map(preb)
+const h = Right.of('rain').map(preb)
+console.log(g)
+console.log(h)
+
+const safeHead2 = xs => !xs[0] ? Left.of('找不到第0个元素') : Right.of(xs[0])
+// getName3 :: Users -> Either(String, _)
+const getName3 = compose(map(prop('name')), safeHead2, prop('list'))
+const rg = getName3({list: []})
+const rh = getName3({list: [{name: 'tom', age: 25}]})
+console.log(rg)
+console.log(rh)
+
+/* ---------------------------------Either End--------------------------------------- */
 
 /////////////////////////////////// 斐波那契 //////////////////////////////////////////
 
