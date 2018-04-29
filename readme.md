@@ -17,6 +17,7 @@
 
 > nginx
 
+- killall -9 nginx
 - brew search nginx
 - brew install nginx
 - brew info nginx
