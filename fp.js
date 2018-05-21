@@ -11,6 +11,15 @@ const memoize = f => {
   }
 }
 
+// query :: s => o
+// s = window.location.search || ?name=string&token=adfe+asc==
+const query = search => search
+  .slice(1)
+  .split('&')
+  .map(v => /(\w+)=(.+)/.exec(v))
+  .map(item => [item[1], item[2]])
+  .reduce((p, c) => (p[c[0]]=c[1], p), {})
+
 const pp = (p, x) => x[p]
 const up = x => x.toUpperCase()
 const cc = (b, x) => x.concat(b)
